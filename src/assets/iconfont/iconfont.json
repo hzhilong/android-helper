@@ -1,0 +1,72 @@
+{
+  "id": "2362518",
+  "name": "Android PC Helper",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "16711860",
+      "name": "安卓手机",
+      "font_class": "android-phone",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "17711732",
+      "name": "已安装应用",
+      "font_class": "app2",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "12516970",
+      "name": "信息",
+      "font_class": "info",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "11945826",
+      "name": "流程节点未连接",
+      "font_class": "device-offline",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "19401028",
+      "name": "刷新",
+      "font_class": "refresh",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "12696078",
+      "name": "退出",
+      "font_class": "out",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3876280",
+      "name": "android",
+      "font_class": "android",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "13808035",
+      "name": "关于",
+      "font_class": "about",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "15023373",
+      "name": "应用",
+      "font_class": "app",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    }
+  ]
+}

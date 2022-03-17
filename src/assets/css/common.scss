@@ -1,0 +1,24 @@
+@import "config";
+
+.option-btn {
+  border: none;
+  color: $base-color;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 4px;
+  background: #f2f2f2;
+  border-radius: 4px;
+  margin-right: 4px;
+  line-height: 28px;
+  white-space: nowrap;
+
+  &:hover {
+    background: $base-color;
+    border-radius: 4px;
+    color: #FFF;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
