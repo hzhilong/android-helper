@@ -213,7 +213,7 @@ function batchUninstallApp(deviceId, packageNames) {
 function installApp(deviceId, apkPath, appName) {
   return new Promise((resolve, reject) => {
     let tempStart = "adb -s " + deviceId + " "
-    exec([tempStart + " install -r " + apkPath]).then(result => {
+    exec([tempStart + ' install -r "' + apkPath + '"']).then(result => {
       resolve(result)
     })
   })
