@@ -5,6 +5,7 @@ const cpExec = window.require("child_process").exec
 const adbPath = ".\\resources\\adb\\"
 
 function exec(cmds, options = {}, isDecodeStr = true) {
+  console.log(cmds, options)
   if (options === null || options === undefined) options = {}
   // if (isDecodeStr) options.encoding = "binary"
   if (isDecodeStr) options.encoding = "binary"
@@ -221,7 +222,7 @@ function installApp(deviceId, apkPath, appName) {
 function pullApp(deviceId, packageName, apkPath = "", appName, versionName = "") {
   let homedir = window.require("os").homedir()
   cpExec(
-    '"' + "mkdir " + window.require("path").join(homedir, "Desktop", "apk") + '"',
+    "md " + '"' + window.require("path").join(homedir, "Desktop", "apk") + '"',
     {},
     (error, stdout, stderr) => {}
   )
@@ -255,7 +256,7 @@ function pullApp(deviceId, packageName, apkPath = "", appName, versionName = "")
 async function batchPullApp(deviceId, list) {
   let homedir = window.require("os").homedir()
   cpExec(
-    "mkdir " + '"' + window.require("path").join(homedir, "Desktop", "apk") + '"',
+    "md " + '"' + window.require("path").join(homedir, "Desktop", "apk") + '"',
     {},
     (error, stdout, stderr) => {}
   )
