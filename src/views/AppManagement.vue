@@ -321,9 +321,11 @@
     watch: {
       deviceId(newValue, oldValue) {},
       tabIndex(newValue, oldValue) {
+        this.saveApkInfo()
         this.refreshPage()
       },
     },
+    created() {},
     mounted() {
       this.deviceId = this.$route.query.deviceId
       this.savedApksData = StorageUtil.getItem("savedApksData-" + this.deviceId)
@@ -334,7 +336,17 @@
         this.refreshPage()
       })
     },
+    beforeDestroy() {
+      this.saveApkInfo()
+      this.tabIndex = 4
+    },
+    destroyed() {},
     methods: {
+      saveApkInfo() {
+        if (this.savedApksData) {
+          StorageUtil.setItem("savedApksData-" + this.deviceId, this.savedApksData)
+        }
+      },
       handleResultMsg(result) {
         if (result.stderr) {
           window._modal(result.stderr)
@@ -571,10 +583,6 @@
           this.$set(this, "tableData3", newList)
         }
       },
-    },
-    beforeDestroy() {
-      StorageUtil.setItem("savedApksData-" + this.deviceId, this.savedApksData)
-      this.tabIndex = 4
     },
   }
 </script>
