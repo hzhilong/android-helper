@@ -326,7 +326,7 @@
     },
     mounted() {
       this.deviceId = this.$route.query.deviceId
-      this.savedApksData = StorageUtil.getItem("savedApksData")
+      this.savedApksData = StorageUtil.getItem("savedApksData-" + this.deviceId)
       if (!this.savedApksData) {
         this.savedApksData = {}
       }
@@ -338,6 +338,10 @@
       handleResultMsg(result) {
         if (result.stderr) {
           window._modal(result.stderr)
+          return false
+        }
+        if (result.stdout.startsWith("adb: error")) {
+          window._modal(result.stdout)
           return false
         }
         return true
@@ -569,7 +573,7 @@
       },
     },
     beforeDestroy() {
-      StorageUtil.setItem("savedApksData", this.savedApksData)
+      StorageUtil.setItem("savedApksData-" + this.deviceId, this.savedApksData)
       this.tabIndex = 4
     },
   }

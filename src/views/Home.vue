@@ -20,6 +20,9 @@
           :class="isDeviceRefreshing ? 'active' : ''"
           @click="refreshDevice"
         ></span>
+        <Tooltip :content="isRoot ? '取消root权限' : '获取root权限'" v-if="false">
+          <span class="iconfont icon-root" :class="isRoot ? 'active' : ''" @click="getRoot"></span>
+        </Tooltip>
       </div>
       <div class="menus">
         <div
@@ -92,6 +95,7 @@
         // 是否正在刷新设备
         isDeviceRefreshing: false,
         appAuthor: "",
+        isRoot: false,
       }
     },
     created() {},
@@ -147,6 +151,9 @@
       },
       gotoGithub() {
         shell.openExternal(window.Config.GITHUB_URL)
+      },
+      getRoot() {
+        window._is_root = this.isRoot = !this.isRoot
       },
     },
   }

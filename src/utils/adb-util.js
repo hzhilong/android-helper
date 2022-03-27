@@ -5,7 +5,7 @@ const cpExec = window.require("child_process").exec
 const adbPath = ".\\resources\\adb\\"
 
 function exec(cmds, options = {}, isDecodeStr = true) {
-  console.log(cmds, options)
+  // console.log(cmds, options)
   if (options === null || options === undefined) options = {}
   // if (isDecodeStr) options.encoding = "binary"
   if (isDecodeStr) options.encoding = "binary"
@@ -234,7 +234,7 @@ function pullApp(deviceId, packageName, apkPath = "", appName, versionName = "")
   if (apkPath) {
     return new Promise((resolve, reject) => {
       exec([tempStart + " pull " + apkPath.trim() + " " + savePath]).then(result => {
-        console.log(result)
+        // console.log(result)
         resolve(result)
       })
     })

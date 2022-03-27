@@ -39,7 +39,6 @@
     methods: {
       onBeforeUpload(file) {
         let _this = this
-        console.log(file)
         if (!this.deviceId) {
           window._message("未选择设备", "error")
           return
@@ -52,13 +51,11 @@
         _this.$loading.show("请稍候")
         AdbUtil.installApp(this.deviceId, file.path, file.name)
           .then(result => {
-            console.log("【上传结果1】", result)
             _this.$loading.hide()
             _this.uploadResult = `[${file.name}]上传结果:
             ${result.stderr ? result.stderr : result.stdout}`
           })
           .catch(e => {
-            console.log("【上传结果2】", e)
             _this.$loading.hide()
           })
         return false

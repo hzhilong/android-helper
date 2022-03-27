@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "929664",
+      "name": "android-root",
+      "font_class": "root",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "16711860",
       "name": "安卓手机",
       "font_class": "android-phone",

@@ -16,6 +16,7 @@ Vue.use(ViewUI)
 
 // 设置全局变量
 window.Config = Config
+window._is_root = false
 Vue.prototype.Router = router
 
 // 信息提示 msg, flag('success', 'error', 'info')
