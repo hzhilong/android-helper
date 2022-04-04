@@ -566,9 +566,12 @@
         } else {
           if (list && list.length > 0) {
             list.forEach(item => {
+              let label = item.applicationLabel
+              let packageName = item.packageName
+              let searchContent = this.searchContent.toLowerCase()
               if (
-                (item.applicationLabel && item.applicationLabel.indexOf(this.searchContent) >= 0) ||
-                (item.packageName && item.packageName.indexOf(this.searchContent) >= 0)
+                (label && label.toLowerCase().indexOf(searchContent) >= 0) ||
+                (packageName && packageName.toLowerCase().indexOf(searchContent) >= 0)
               ) {
                 newList.push(Object.assign({}, item))
               }

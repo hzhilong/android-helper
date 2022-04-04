@@ -28,16 +28,15 @@ async function createWindow() {
     // Load the url of the dev server if in development mode
     await mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
     if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
-
-    // 在开发环境和生产环境均可通过快捷键打开devTools
-    globalShortcut.register("CommandOrControl+Shift+i", function() {
-      mainWindow.webContents.openDevTools()
-    })
   } else {
     createProtocol("app")
     // Load the index.html when not in development
     mainWindow.loadURL("app://./index.html")
   }
+  // 在开发环境和生产环境均可通过快捷键打开devTools
+  globalShortcut.register("CommandOrControl+Shift+i", function() {
+    mainWindow.webContents.openDevTools()
+  })
   createMenu()
 
   ipcMain.on("closeWindow", (event, arg) => {
