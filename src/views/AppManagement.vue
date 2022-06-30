@@ -73,6 +73,9 @@
         <Button size="small" slot="extra" @click="batchPullApp" style="margin-left: 10px">
           导出
         </Button>
+        <Button size="small" slot="extra" @click="refreshAllCache" style="margin-left: 10px">
+          刷新缓存
+        </Button>
       </Tabs>
     </template>
   </div>
@@ -104,7 +107,7 @@
         deviceId: "",
         tabIndex: "1",
 
-        tableMaxHeight: 500,
+        tableMaxHeight: 580,
         refPageTable1: "r1" + new Date().getTime(),
         tableColumns1: [
           {
@@ -131,7 +134,7 @@
           },
           {
             title: "操作",
-            width: 150,
+            width: 180,
             key: "address",
             align: "center",
             render: (h, params) => {
@@ -154,19 +157,10 @@
                   })
                 }),
                 renderOptionBtn(h, "导出", () => {
-                  _this.$loading.show("请稍候")
-                  AdbUtil.pullApp(
-                    _this.deviceId,
-                    row.packageName,
-                    row.apkPath,
-                    row.applicationLabel,
-                    row.versionName
-                  ).then(result => {
-                    _this.$loading.hide()
-                    if (_this.handleResultMsg(result)) {
-                      window._message("已导出到[桌面/apk/]目录下")
-                    }
-                  })
+                  _this.runPullApp([row])
+                }),
+                renderOptionBtn(h, "刷新", () => {
+                  _this.refreshCache(row.packageName, _this.tabIndex, row._index)
                 }),
               ]
             },
@@ -200,7 +194,7 @@
           },
           {
             title: "操作",
-            width: 150,
+            width: 180,
             key: "address",
             align: "center",
             render: (h, params) => {
@@ -223,19 +217,10 @@
                   })
                 }),
                 renderOptionBtn(h, "导出", () => {
-                  _this.$loading.show("请稍候")
-                  AdbUtil.pullApp(
-                    _this.deviceId,
-                    row.packageName,
-                    row.apkPath,
-                    row.applicationLabel,
-                    row.versionName
-                  ).then(result => {
-                    _this.$loading.hide()
-                    if (_this.handleResultMsg(result)) {
-                      window._message("已导出到[桌面/apk/]目录下")
-                    }
-                  })
+                  _this.runPullApp([row])
+                }),
+                renderOptionBtn(h, "刷新", () => {
+                  _this.refreshCache(row.packageName, _this.tabIndex, row._index)
                 }),
               ]
             },
@@ -269,7 +254,7 @@
           },
           {
             title: "操作",
-            width: 150,
+            width: 180,
             key: "address",
             align: "center",
             render: (h, params) => {
@@ -292,19 +277,10 @@
                   })
                 }),
                 renderOptionBtn(h, "导出", () => {
-                  _this.$loading.show("请稍候")
-                  AdbUtil.pullApp(
-                    _this.deviceId,
-                    row.packageName,
-                    row.apkPath,
-                    row.applicationLabel,
-                    row.versionName
-                  ).then(result => {
-                    _this.$loading.hide()
-                    if (_this.handleResultMsg(result)) {
-                      window._message("已导出到[桌面/apk/]目录下")
-                    }
-                  })
+                  _this.runPullApp([row])
+                }),
+                renderOptionBtn(h, "刷新", () => {
+                  _this.refreshCache(row.packageName, row._index)
                 }),
               ]
             },
@@ -392,7 +368,7 @@
                   packageName: packageName,
                 })
               } else {
-                list.push(_this.savedApksData[packageName])
+                list.push(Object.assign({}, _this.savedApksData[packageName], { _index: i }))
               }
             }
             if (_this.tabIndex === "1") {
@@ -425,31 +401,43 @@
             _this.$loading.hide()
           })
       },
-      async getApkInfo(packageName, currTabIndex, index) {
-        if (this.savedApksData[packageName] !== undefined) {
+      async getApkInfo(
+        packageName,
+        currTabIndex,
+        index,
+        ignoreSaved = false,
+        callback = undefined
+      ) {
+        if (!ignoreSaved && this.savedApksData[packageName] !== undefined) {
           return
         }
         await AdbUtil.getApkInfo(this.deviceId, packageName).then(result => {
           if (result.apkInfo) {
             this.savedApksData[packageName] = result.apkInfo
             if (currTabIndex !== this.tabIndex) {
+              if (callback != undefined) {
+                callback(result.apkInfo, "当前tab页已变化")
+              }
               return
             }
             if (currTabIndex === "1") {
               if (this.tableData1[index] && this.tableData1[index].packageName === packageName) {
-                Object.assign(this.tableData1[index], result.apkInfo)
+                Object.assign(this.tableData1[index], result.apkInfo, { _index: index })
                 this.$set(this.tableData1, index, this.tableData1[index])
               }
             } else if (currTabIndex === "2") {
               if (this.tableData2[index] && this.tableData2[index].packageName === packageName) {
-                Object.assign(this.tableData2[index], result.apkInfo)
+                Object.assign(this.tableData2[index], result.apkInfo, { _index: index })
                 this.$set(this.tableData2, index, this.tableData2[index])
               }
             } else if (currTabIndex === "3") {
               if (this.tableData3[index] && this.tableData3[index].packageName === packageName) {
-                Object.assign(this.tableData3[index], result.apkInfo)
+                Object.assign(this.tableData3[index], result.apkInfo, { _index: index })
                 this.$set(this.tableData3, index, this.tableData3[index])
               }
+            }
+            if (callback !== undefined) {
+              callback(result.apkInfo)
             }
           }
         })
@@ -533,17 +521,21 @@
           })
       },
       batchPullApp() {
+        this.runPullApp(this.getTableSelection())
+      },
+      async runPullApp(list) {
         let _this = this
-        let tableSelection = this.getTableSelection()
-        if (!tableSelection || tableSelection.length === 0) {
+        if (!_this || _this.length === 0) {
           window._message("未选择数据", "error")
           return
         }
         _this.$loading.show("请稍候")
-        AdbUtil.batchPullApp(this.deviceId, tableSelection)
+        AdbUtil.batchPullApp(this.deviceId, list)
           .then(result => {
             if (_this.handleResultMsg(result)) {
               window._message("已导出到[桌面/apk/]目录下（部分数据过大可能延迟）")
+            } else {
+              window._message("导出失败，可刷新缓存后重试")
             }
             _this.$loading.hide()
           })
@@ -585,6 +577,17 @@
         } else if (this.tabIndex === "3") {
           this.$set(this, "tableData3", newList)
         }
+      },
+      refreshAllCache() {
+        let _this = this
+        window._confirm("确定刷新所有缓存吗", () => {
+          _this.savedApksData = {}
+          StorageUtil.setItem("savedApksData-" + _this.deviceId, {})
+          _this.refreshPage()
+        })
+      },
+      async refreshCache(packageName, currTabIndex, index) {
+        await this.getApkInfo(packageName, currTabIndex, index, true)
       },
     },
   }

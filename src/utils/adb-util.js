@@ -19,7 +19,13 @@ function exec(cmds, options = {}, isDecodeStr = true) {
         stderr = decodeCmdResultStr(stderr)
         stdout = decodeCmdResultStr(stdout)
       }
-      resolve({ stderr, stdout })
+      if (stdout.startsWith("adb: error")) {
+        resolve({ stderr: stdout })
+      } else if (stderr) {
+        resolve({ stderr, stdout })
+      } else {
+        resolve({ stderr, stdout })
+      }
     })
   })
 }
@@ -253,7 +259,7 @@ function pullApp(deviceId, packageName, apkPath = "", appName, versionName = "")
   }
 }
 
-async function batchPullApp(deviceId, list) {
+async function batchPullApp(deviceId, list, failedCallBack = undefined) {
   let homedir = window.require("os").homedir()
   cpExec(
     "md " + '"' + window.require("path").join(homedir, "Desktop", "apk") + '"',
@@ -263,6 +269,7 @@ async function batchPullApp(deviceId, list) {
   let totalCount = list.length
   let tempStart = "adb -s " + deviceId + " "
   let newList = Object.assign([], list)
+  let failedList = []
   for (let i = 0; i < newList.length; i++) {
     let item = newList[i]
     item.fileName =
