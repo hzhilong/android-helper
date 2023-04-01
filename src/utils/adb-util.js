@@ -38,6 +38,11 @@ function decodeCmdResultStr(str) {
   return iconv.decode(new Buffer(str, "binary"), "utf-8")
 }
 
+function openAdb() {
+  console.log("aaa")
+  return cpExec("start /D" + adbPath + " cmd.exe")
+}
+
 /**
  * 检查adb环境
  */
@@ -338,4 +343,5 @@ module.exports = {
   installApp,
   pullApp,
   batchPullApp,
+  openAdb,
 }

@@ -1,6 +1,6 @@
 {
   "name": "android-helper",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "scripts": {
     "electron:build": "vue-cli-service electron:build",

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6718940",
+      "name": "cloudshell 云命令行",
+      "font_class": "cmd",
+      "unicode": "e8e5",
+      "unicode_decimal": 59621
+    },
+    {
       "icon_id": "929664",
       "name": "android-root",
       "font_class": "root",

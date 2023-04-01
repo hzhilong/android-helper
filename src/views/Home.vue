@@ -59,14 +59,16 @@
         menuIndex: 0,
         menus: [
           {
-            text: "应用管理", //TODO 备份、卸载、冻结、应用详情
+            text: "应用管理",
             icon: "app",
             viewPath: "/appManagement",
+            type: 1,
           },
           {
             text: "上传应用",
             icon: "app2",
             viewPath: "/installApp",
+            type: 1,
           },
           // {
           //   text: "设备信息",
@@ -79,9 +81,18 @@
           //   viewPath: "/about",
           // },
           {
+            text: "adb 命令",
+            icon: "cmd",
+            viewPath: "/appManagement",
+            type: 2,
+            onclick: "openAdb",
+          },
+          {
             text: "退出",
             icon: "out",
             viewPath: "/appManagement",
+            type: 2,
+            onclick: "exitApp",
           },
           //TODO 手机信息/拖动安装apk
           //TODO 手机实时截图
@@ -107,8 +118,9 @@
         return this.menuIndex == index ? "active" : ""
       },
       onClickMenu(index) {
-        if (index === this.menus.length - 1) {
-          ipcRenderer.send("closeWindow")
+        let menu = this.menus[index]
+        if (menu.type == 2) {
+          this[menu.onclick]()
           return
         }
         this.menuIndex = index
@@ -120,6 +132,12 @@
             deviceId: this.currDeviceId,
           },
         })
+      },
+      openAdb() {
+        AdbUtil.openAdb()
+      },
+      exitApp() {
+        ipcRenderer.send("closeWindow")
       },
       refreshDevice() {
         // 当前的可执行文件所在目录
