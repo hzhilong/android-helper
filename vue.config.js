@@ -3,6 +3,7 @@ const Config = require("./config/index")
 const aliasConfig = require("./alias.config")
 const webpack = require("webpack")
 
+process.env.VUE_APP_NAME = require("./package.json").name
 process.env.VUE_APP_VERSION = require("./package.json").version
 
 module.exports = function resolveClientEnv(options, raw) {
@@ -68,7 +69,7 @@ module.exports = function resolveClientEnv(options, raw) {
           mac: {
             // icon: "./public/app.png",
           },
-          productName: Config.APP_NAME,
+          productName: process.env.VUE_APP_NAME,
           asar: false,
           extraResources: {
             from: "./resources/adb/",
