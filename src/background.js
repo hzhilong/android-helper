@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow, Menu, globalShortcut, ipcMain } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
+import path from "path"
 const isDevelopment = process.env.NODE_ENV !== "production"
 
 // Scheme must be registered before the app is ready
@@ -13,6 +14,7 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    icon: "./public/app_logo.ico",
     width: 1100,
     minWidth: 1100,
     height: 680,

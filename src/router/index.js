@@ -1,8 +1,7 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Home from "../views/Home"
-import DeviceInfo from "../views/DeviceInfo"
-import About from "../views/About"
+import Cmd from "views/Cmd.vue"
 import AppManagement from "../views/AppManagement"
 import InstallApp from "../views/InstallApp"
 
@@ -26,14 +25,9 @@ const routes = [
         component: InstallApp,
       },
       {
-        name: "设备信息",
-        path: "/deviceInfo",
-        component: DeviceInfo,
-      },
-      {
-        name: "关于",
-        path: "/about",
-        component: About,
+        name: "常用命令",
+        path: "/cmd",
+        component: Cmd,
       },
     ],
   },

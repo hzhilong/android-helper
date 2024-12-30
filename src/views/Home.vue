@@ -70,22 +70,11 @@
             viewPath: "/installApp",
             type: 1,
           },
-          // {
-          //   text: "设备信息",
-          //   icon: "android",
-          //   viewPath: "/deviceInfo",
-          // },
-          // {
-          //   text: "关于",
-          //   icon: "about",
-          //   viewPath: "/about",
-          // },
           {
-            text: "adb 命令",
+            text: "常用命令",
             icon: "cmd",
-            viewPath: "/appManagement",
-            type: 2,
-            onclick: "openAdb",
+            viewPath: "/cmd",
+            type: 1,
           },
           {
             text: "退出",
@@ -94,9 +83,6 @@
             type: 2,
             onclick: "exitApp",
           },
-          //TODO 手机信息/拖动安装apk
-          //TODO 手机实时截图
-          // TODO 卸载当前打开的软件
         ],
 
         // 当前选择的设备

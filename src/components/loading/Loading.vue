@@ -92,7 +92,7 @@
 
     @for $i from 1 through $total {
       &:nth-child(#{$i}) {
-        @include anim-item(#{6-$i});
+        @include anim-item(#{6 - $i});
       }
       @keyframes load-#{$i} {
         $padding1: $span * $i;
@@ -115,12 +115,12 @@
             border-radius: $padding1;
           }
         } @else {
-          #{percentage($total - $i +1)/$percentageTotal} {
+          #{percentage($total - $i + 1) / $percentageTotal} {
             padding: $total * $span;
             margin: $totalSpan - $span * $total;
             border-radius: $total * $span;
           }
-          #{percentage($total - $i +6)/$percentageTotal} {
+          #{percentage($total - $i + 6) / $percentageTotal} {
             padding: $span;
             margin: $totalSpan - $span;
             border-radius: $span;

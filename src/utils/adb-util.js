@@ -329,6 +329,7 @@ async function batchPullApp(deviceId, list, failedCallBack = undefined) {
 }
 
 module.exports = {
+  exec,
   getAdbVersion,
   initAAPT,
   getDeviceList,

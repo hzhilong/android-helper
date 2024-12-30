@@ -3,6 +3,8 @@ const Config = require("./config/index")
 const aliasConfig = require("./alias.config")
 const webpack = require("webpack")
 
+process.env.VUE_APP_VERSION = require("./package.json").version
+
 module.exports = function resolveClientEnv(options, raw) {
   let envParams = {}
   Object.keys(process.env).forEach(key => {
@@ -15,7 +17,6 @@ module.exports = function resolveClientEnv(options, raw) {
     Object.keys(envParams).forEach(key => {
       console.log(key, "\t", envParams[key])
     })
-    console.log("---------------------------------")
   }
   console.log("-------------配置参数-------------")
   console.log(Config)
@@ -38,7 +39,7 @@ module.exports = function resolveClientEnv(options, raw) {
     publicPath: "./",
     chainWebpack: config => {
       config.plugin("html").tap(args => {
-        args[0].title = Config.APP_NAME
+        args[0].title = Config.APP_NAME + " " + process.env.VUE_APP_VERSION
         return args
       })
       let aliasKeys = Object.keys(aliasConfig.resolve.alias)
@@ -62,7 +63,7 @@ module.exports = function resolveClientEnv(options, raw) {
       electronBuilder: {
         builderOptions: {
           win: {
-            // icon: "./public/app.ico",
+            icon: "./public/app_logo.ico",
           },
           mac: {
             // icon: "./public/app.png",

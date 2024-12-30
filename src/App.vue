@@ -41,6 +41,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+</style>
 
+<style lang="scss">
   @import "assets/css/common";
 </style>
