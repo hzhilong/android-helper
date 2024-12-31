@@ -1,5 +1,12 @@
 {
   "name": "android-helper",
+  "productName": "Android 助手",
+  "description": "哗哩哗哩（bilibili）工具箱",
+  "author": {
+    "name": "hzhilong",
+    "email": "hzhilong777@outlook.com",
+    "url": "https://github.com/hzhilong/android-helper"
+  },
   "version": "0.1.4",
   "private": true,
   "scripts": {
